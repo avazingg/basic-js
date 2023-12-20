@@ -18,33 +18,30 @@ const { NotImplementedError } = require('../extensions/index.js');
 
 function repeater(str, options) {
   let result = '';
-  if (options.hasOwnProperty('repeatTimes')) {
-      for (let i = 0; i < options.repeatTimes; i++) {
-          result += str;
-          if (options.hasOwnProperty('additionRepeatTimes')) {
-              for (let j = 0; j < options.additionRepeatTimes; j++) {
-                  result += options.addition;
-                  if (j < options.additionRepeatTimes - 1) {
-                      if (options.hasOwnProperty('additionSeparator')) {
-                          result += options.additionSeparator;
-                      }
-                      else { result += '|' }
-                  }
-              }
-          }
-          if (i < options.repeatTimes - 1) {
-              if (options.hasOwnProperty('separator')) {
-                  result += options.separator;
-              }
-              else {
-                  result += '+';
-              }
+  const {
+      repeatTimes = 1,
+      separator = '+',
+      addition = '',
+      additionRepeatTimes = 1,
+      additionSeparator = '|',
+  } = options || {};
+  const string = String(str);
+  const additionString = String(addition);
+
+  for (let i = 0; i < repeatTimes; i++) {
+      result += string;
+      for (let j = 0; j < additionRepeatTimes; j++) {
+          result += additionString;
+          if (j < additionRepeatTimes - 1) {
+              result += additionSeparator;
           }
       }
+      if (i < repeatTimes - 1) {
+          result += separator;
+      }
+      //result += str + additionString;
   }
-  else {
-      result += str + options.addition;
-  }
+  //result += str + additionString; //+ separator;
   return result;
 }
 
