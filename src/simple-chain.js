@@ -15,15 +15,24 @@ const chainMaker = {
     return this;
   },
   removeLink(position) {
+    if (isNaN(position) ||  position < 1 || position > this.getLength()) {
+      this.chain = [];
+      throw new Error("You can't remove incorrect link!");
+    }
+  position = position - 1;
    this.chain.splice(position, 1);
    return this;
+    
+  
   },
   reverseChain() {
     this.chain.reverse();
     return this;
   },
   finishChain() {
-    return this.chain.join('~~');
+    let result = this.chain.join('~~');
+    this.chain = [];
+    return result;
   }
 };
 
